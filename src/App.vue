@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { dateZhCN, NConfigProvider, zhCN } from "naive-ui"
-import HelloWorld from "./components/HelloWorld.vue"
+import SignIn from "./views/SignIn.vue"
 </script>
 
 <template>
     <n-config-provider :locale="zhCN" :date-locale="dateZhCN">
-        <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+        <sign-in></sign-in>
     </n-config-provider>
 </template>
 

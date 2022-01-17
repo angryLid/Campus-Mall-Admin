@@ -8,10 +8,12 @@ specifiers:
   vfonts: ^0.0.3
   vite: ^2.7.2
   vue: ^3.2.25
+  vue-router: '4'
   vue-tsc: ^0.29.8
 
 dependencies:
   vue: 3.2.27
+  vue-router: 4.0.12_vue@3.2.27
 
 devDependencies:
   '@vicons/fluent': 0.11.0
@@ -208,6 +210,10 @@ packages:
     dependencies:
       '@vue/compiler-dom': 3.2.27
       '@vue/shared': 3.2.27
+    dev: false
+
+  /@vue/devtools-api/6.0.0-beta.21.1:
+    resolution: {integrity: sha512-FqC4s3pm35qGVeXRGOjTsRzlkJjrBLriDS9YXbflHLsfA9FrcKzIyWnLXoNm+/7930E8rRakXuAc2QkC50swAw==, tarball: '@vue/devtools-api/download/@vue/devtools-api-6.0.0-beta.21.1.tgz'}
     dev: false
 
   /@vue/reactivity-transform/3.2.27:
@@ -1134,6 +1140,15 @@ packages:
       vscode-pug-languageservice: 0.29.8
       vscode-typescript-languageservice: 0.29.8
     dev: true
+
+  /vue-router/4.0.12_vue@3.2.27:
+    resolution: {integrity: sha512-CPXvfqe+mZLB1kBWssssTiWg4EQERyqJZes7USiqfW9B5N2x+nHlnsM1D3b5CaJ6qgCvMmYJnz+G0iWjNCvXrg==, tarball: vue-router/download/vue-router-4.0.12.tgz}
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      '@vue/devtools-api': 6.0.0-beta.21.1
+      vue: 3.2.27
+    dev: false
 
   /vue-tsc/0.29.8_typescript@4.5.4:
     resolution: {integrity: sha512-pT0wLRjvRuSmB+J4WJT6uuV9mO0KtSSXEAtaVXZQzyk5+DJdbLIQTbRce/TXSkfqt1l1WogO78RjtOJFiMCgfQ==, tarball: vue-tsc/download/vue-tsc-0.29.8.tgz}
