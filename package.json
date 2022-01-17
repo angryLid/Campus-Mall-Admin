@@ -2,7 +2,7 @@
   "name": "mall-admin",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host --port=3001",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview"
   },
