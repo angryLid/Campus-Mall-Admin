@@ -26,8 +26,13 @@
 <script lang="ts" setup>
 import { NH1 } from "naive-ui"
 import { reactive } from "vue"
+import { useRouter } from "vue-router"
+import { useStore } from "../store"
 import ajax from "../utils/ajax"
 import cookies from "../utils/cookies"
+
+const store = useStore()
+const router = useRouter()
 const form = {
     btn: "登录",
     title: "管理后台",
@@ -51,6 +56,8 @@ async function onSubmit() {
 
     if (resp.code === 200) {
         cookies.setItem("auth", resp.data)
+        store.jwt = resp.data
+        router.replace({ name: "home" })
     }
 }
 
