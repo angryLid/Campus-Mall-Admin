@@ -3,8 +3,14 @@ import { useStore } from "./store"
 import ajax from "./utils/ajax"
 import HomePage from "./views/HomePage.vue"
 import SignIn from "./views/SignIn.vue"
+import UserManage from "./views/UserManage.vue"
 const routes = [
-    { path: "/", component: HomePage, name: "home" },
+    {
+        path: "/",
+        component: HomePage,
+        name: "home",
+        children: [{ path: "user", component: UserManage }],
+    },
     { path: "/auth", component: SignIn, name: "signIn" },
 ]
 const router = createRouter({
