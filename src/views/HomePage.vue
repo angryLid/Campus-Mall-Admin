@@ -1,24 +1,36 @@
 <template>
-    <n-layout has-sider>
-        <n-layout-sider content-style="padding: 24px;">
-            <side-bar></side-bar>
-        </n-layout-sider>
-        <n-layout>
-            <n-layout-header><nav-bar></nav-bar></n-layout-header>
-            <n-layout-content> <router-view> </router-view> </n-layout-content>
-            <n-layout-footer>成府路</n-layout-footer>
+    <div style="height: 100vh; position: relative">
+        <n-layout has-sider position="absolute">
+            <n-layout-sider
+                bordered
+                collapse-mode="width"
+                :collapsed-width="64"
+                :width="240"
+                show-trigger="arrow-circle"
+            >
+                <side-bar />
+            </n-layout-sider>
+            <n-layout>
+                <div style="height: 100%; position: relative">
+                    <n-layout-header position="absolute" style="top: 0">
+                        <nav-bar />
+                    </n-layout-header>
+
+                    <n-layout-content
+                        position="absolute"
+                        style="top: 50px"
+                        :native-scrollbar="false"
+                    >
+                        <router-view />
+                    </n-layout-content>
+                </div>
+            </n-layout>
         </n-layout>
-    </n-layout>
+    </div>
 </template>
 
 <script lang="ts" setup>
-import {
-    NLayout,
-    NLayoutContent,
-    NLayoutFooter,
-    NLayoutHeader,
-    NLayoutSider,
-} from "naive-ui"
+import { NLayout, NLayoutContent, NLayoutHeader, NLayoutSider } from "naive-ui"
 import { onMounted } from "vue"
 import NavBar from "../components/NavBar.vue"
 import SideBar from "../components/SideBar.vue"

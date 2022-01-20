@@ -1,5 +1,5 @@
 <script lang="tsx" setup>
-import { NDataTable } from "naive-ui"
+import { NDataTable, NLayout } from "naive-ui"
 import { onMounted, ref } from "vue"
 import ajax from "../utils/ajax"
 
@@ -43,7 +43,7 @@ async function onBtnClick(row: unknown) {
 </script>
 
 <template>
-    <n-data-table :columns="columns" :data="data"> </n-data-table>
+    <n-data-table :columns="columns" :data="data" />
 </template>
 
 <style scoped></style>

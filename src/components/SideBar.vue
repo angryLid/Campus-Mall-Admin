@@ -1,25 +1,60 @@
-<script setup lang="ts">
-import { NCollapse, NCollapseItem } from "naive-ui"
-const sideBar = {
-    userPart: {
-        title: "用户管理",
-        item0: "学生用户审核",
+<script setup lang="tsx">
+import {
+    BookOutline as BookIcon,
+    PersonOutline as PersonIcon,
+    WineOutline as WineIcon,
+} from "@vicons/ionicons5"
+import { NMenu } from "naive-ui"
+import { ref } from "vue"
+const activeKey = ref(null)
+
+const menuOptions = [
+    {
+        label: "label",
+        key: "the",
+        icon: () => (
+            <n-icon>
+                <WineIcon />
+            </n-icon>
+        ),
     },
-}
+    {
+        label: "且听风吟",
+        key: "hear-the-wind---sing",
+        icon: () => (
+            <n-icon>
+                <PersonIcon />
+            </n-icon>
+        ),
+    },
+    {
+        label: "且听风吟",
+        key: "hear-the-wind--sing",
+        icon: () => (
+            <n-icon>
+                <BookIcon />
+            </n-icon>
+        ),
+    },
+    {
+        label: "且听风吟",
+        key: "hear-the-wind--sing",
+        icon: () => (
+            <n-icon>
+                <BookIcon />
+            </n-icon>
+        ),
+    },
+]
 </script>
 
 <template>
-    <n-collapse>
-        <n-collapse-item :title="sideBar.userPart.title" name="1">
-            <div>{{ sideBar.userPart.item0 }}</div>
-        </n-collapse-item>
-        <n-collapse-item title="白银" name="2">
-            <div>很好</div>
-        </n-collapse-item>
-        <n-collapse-item title="黄金" name="3">
-            <div>真棒</div>
-        </n-collapse-item>
-    </n-collapse>
+    <n-menu
+        v-model:value="activeKey"
+        :options="menuOptions"
+        :collapsed-width="64"
+        :collapsed-icon-size="22"
+    />
 </template>
 
 <style scoped></style>
