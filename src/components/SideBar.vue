@@ -1,47 +1,50 @@
 <script setup lang="tsx">
-import {
-    BookOutline as BookIcon,
-    PersonOutline as PersonIcon,
-    WineOutline as WineIcon,
-} from "@vicons/ionicons5"
+import { BagHandle, BarChart, Person, Pricetag } from "@vicons/ionicons5"
 import { NMenu } from "naive-ui"
 import { ref } from "vue"
-const activeKey = ref(null)
+
+const activeKey = ref("user")
 
 const menuOptions = [
     {
-        label: "label",
-        key: "the",
+        label: "用户管理",
+        key: "user",
         icon: () => (
             <n-icon>
-                <WineIcon />
+                <Person />
+            </n-icon>
+        ),
+        children: [
+            {
+                label: "启用/停用用户",
+                key: "on-off-user",
+            },
+        ],
+    },
+    {
+        label: "商品管理",
+        key: "product",
+        icon: () => (
+            <n-icon>
+                <Pricetag />
             </n-icon>
         ),
     },
     {
-        label: "且听风吟",
-        key: "hear-the-wind---sing",
+        label: "卖家管理",
+        key: "retailer",
         icon: () => (
             <n-icon>
-                <PersonIcon />
+                <BagHandle />
             </n-icon>
         ),
     },
     {
-        label: "且听风吟",
-        key: "hear-the-wind--sing",
+        label: "统计信息",
+        key: "statis",
         icon: () => (
             <n-icon>
-                <BookIcon />
-            </n-icon>
-        ),
-    },
-    {
-        label: "且听风吟",
-        key: "hear-the-wind--sing",
-        icon: () => (
-            <n-icon>
-                <BookIcon />
+                <BarChart />
             </n-icon>
         ),
     },
