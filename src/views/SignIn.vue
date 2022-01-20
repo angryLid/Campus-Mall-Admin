@@ -47,13 +47,17 @@ const user = reactive({
 })
 
 async function onSubmit() {
-    const req = await ajax.post("/user/signin/", {
-        telephone: user.id,
-        password: user.password,
-    })
+    const req = await ajax.get(
+        `/admin/?name=${user.id}&password=${user.password}`
+    )
 
     const resp = await req.data
 
+    console.log(
+        "%c [resp]:",
+        "color:white;background:blue;font-size:13px",
+        resp
+    )
     if (resp.code === 200) {
         cookies.setItem("auth", resp.data)
         store.jwt = resp.data

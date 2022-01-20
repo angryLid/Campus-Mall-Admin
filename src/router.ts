@@ -1,6 +1,5 @@
+import cookies from "@/utils/cookies"
 import { createRouter, createWebHashHistory } from "vue-router"
-import { useStore } from "./store"
-import ajax from "./utils/ajax"
 import HomePage from "./views/HomePage.vue"
 import SignIn from "./views/SignIn.vue"
 import UserManage from "./views/UserManage.vue"
@@ -19,12 +18,11 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from) => {
-    const store = useStore()
-
     if (to.name !== "signIn") {
-        const req = await ajax.get("/user/?token=" + store.jwt)
-        const resp = await req.data
-        return resp ? resp : { name: "signIn" }
+        const auth = cookies.getItem("auth")
+        if (auth === null || auth.length < 1) {
+            return { name: "signIn" }
+        }
     }
 })
 export default router

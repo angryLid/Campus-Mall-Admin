@@ -7,20 +7,17 @@ const data = ref([])
 const columns = createColumns()
 
 onMounted(async () => {
-    const req = await ajax.get("/admin/user")
+    const req = await ajax.get("/user/student")
     const resp = await req.data
 
-    console.log(
-        "%c [resp]:",
-        "color:white;background:blue;font-size:13px",
-        resp
-    )
     data.value = resp.data
 })
 function createColumns() {
     return [
+        { title: "姓名", key: "sname" },
+        { title: "学号", key: "stuid" },
         { title: "电话号码", key: "telephone" },
-        { title: "昵称", key: "nickname" },
+        { title: "用户名", key: "uname" },
         { title: "操作", key: "actions", render: render },
     ]
 }
