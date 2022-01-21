@@ -1,6 +1,6 @@
 <script setup lang="tsx">
 import { BagHandle, BarChart, Person, Pricetag } from "@vicons/ionicons5"
-import { NMenu } from "naive-ui"
+import { NLayoutSider, NMenu } from "naive-ui"
 import { ref } from "vue"
 
 const activeKey = ref("user")
@@ -8,7 +8,6 @@ const activeKey = ref("user")
 const menuOptions = [
     {
         label: "用户管理",
-        key: "user",
         icon: () => (
             <n-icon>
                 <Person />
@@ -16,7 +15,20 @@ const menuOptions = [
         ),
         children: [
             {
-                label: "启用/停用用户",
+                label: () => (
+                    <router-link to={{ name: "enroll" }}>
+                        新生入学注册
+                    </router-link>
+                ),
+                key: "enrollment",
+            },
+            {
+                label: () => (
+                    <router-link to={{ name: "switch" }}>
+                        启用或停用用户
+                    </router-link>
+                ),
+
                 key: "on-off-user",
             },
         ],
@@ -52,12 +64,20 @@ const menuOptions = [
 </script>
 
 <template>
-    <n-menu
-        v-model:value="activeKey"
-        :options="menuOptions"
+    <n-layout-sider
+        bordered
+        collapse-mode="width"
         :collapsed-width="64"
-        :collapsed-icon-size="22"
-    />
+        :width="240"
+        show-trigger="arrow-circle"
+    >
+        <n-menu
+            v-model:value="activeKey"
+            :options="menuOptions"
+            :collapsed-width="64"
+            :collapsed-icon-size="22"
+        />
+    </n-layout-sider>
 </template>
 
 <style scoped></style>

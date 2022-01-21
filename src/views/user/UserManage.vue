@@ -1,8 +1,10 @@
 <script lang="tsx" setup>
+import { useStore } from "@/store"
 import { NDataTable, NInputGroup, NTime } from "naive-ui"
 import { onMounted, reactive, ref } from "vue"
-import ajax from "../utils/ajax"
+import ajax from "../../utils/ajax"
 
+const store = useStore()
 interface User {
     id: number
     createdAt: string
@@ -14,6 +16,7 @@ const pagination = reactive({
     pageSize: 10,
 })
 onMounted(async () => {
+    store.location = ["用户管理", "启用或停用用户"]
     const req = await ajax.get("/admin/user")
     const resp = await req.data
     data.value = resp.data
@@ -77,25 +80,19 @@ const search = ref("")
 </script>
 
 <template>
-    <div class="wrapper">
-        <n-form>
-            <n-input-group :style="{ width: '100%' }">
-                <n-input @keydown.enter="onClick" v-model="search" />
-                <n-button type="primary" ghost>搜索</n-button>
-            </n-input-group>
-        </n-form>
+    <n-form>
+        <n-input-group :style="{ width: '100%' }">
+            <n-input @keydown.enter="onClick" v-model="search" />
+            <n-button type="primary" ghost>搜索</n-button>
+        </n-input-group>
+    </n-form>
 
-        <n-data-table
-            :columns="columns"
-            :data="data"
-            :max-height="600"
-            :pagination="pagination"
-        />
-    </div>
+    <n-data-table
+        :columns="columns"
+        :data="data"
+        :max-height="600"
+        :pagination="pagination"
+    />
 </template>
 
-<style scoped>
-.wrapper {
-    padding: 20px;
-}
-</style>
+<style scoped></style>
