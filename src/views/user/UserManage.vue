@@ -5,6 +5,12 @@ import { onMounted, reactive, ref } from "vue"
 import ajax from "../../utils/ajax"
 
 const store = useStore()
+onMounted(async () => {
+    store.location = ["用户管理", "启用或停用用户"]
+    const req = await ajax.get("/admin/user")
+    const resp = await req.data
+    data.value = resp.data
+})
 interface User {
     id: number
     createdAt: string
@@ -15,12 +21,7 @@ const columns = createColumns()
 const pagination = reactive({
     pageSize: 10,
 })
-onMounted(async () => {
-    store.location = ["用户管理", "启用或停用用户"]
-    const req = await ajax.get("/admin/user")
-    const resp = await req.data
-    data.value = resp.data
-})
+
 function createColumns() {
     return [
         { title: "电话号码", key: "telephone" },

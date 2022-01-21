@@ -1,4 +1,12 @@
-import { create, NButton, NForm, NFormItem, NIcon, NInput } from "naive-ui"
+import {
+    create,
+    NButton,
+    NDataTable,
+    NForm,
+    NFormItem,
+    NIcon,
+    NInput,
+} from "naive-ui"
 import { createPinia } from "pinia"
 import "vfonts/FiraCode.css"
 import "vfonts/Lato.css"
@@ -7,7 +15,7 @@ import App from "./App.vue"
 import router from "./router"
 
 const naive = create({
-    components: [NButton, NForm, NFormItem, NIcon, NInput],
+    components: [NButton, NDataTable, NForm, NFormItem, NIcon, NInput],
 })
 const app = createApp(App)
 

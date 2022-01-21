@@ -5,20 +5,47 @@
         :default-upload="false"
         @change="handleChange"
     >
-        <n-button v-if="fileListLengthRef > 0" disabled>文件已选择</n-button>
-        <n-button v-else>上传文件</n-button>
+        <n-button>
+            {{ fileListLengthRef > 0 ? "上传完毕" : "上传文件" }}
+        </n-button>
     </n-upload>
 
-    <n-button>处理</n-button>
+    <n-data-table
+        :columns="columns"
+        :data="data"
+        :max-height="600"
+        :pagination="pagination"
+    />
+
+    <n-space>
+        <n-button @click="onClick">执行注册</n-button>
+    </n-space>
 </template>
 
 <script lang="ts" setup>
 import { useStore } from "@/store"
+import ajax from "@/utils/ajax"
 import type { UploadFileInfo } from "naive-ui"
-import { NUpload } from "naive-ui"
-import { onMounted, ref } from "vue"
-const store = useStore()
+import { NSpace, NUpload } from "naive-ui"
+import * as Papa from "papaparse"
+import { onMounted, reactive, ref } from "vue"
 
+const store = useStore()
+const data = ref([{}])
+const columns = createColumns()
+
+const pagination = reactive({
+    pageSize: 10,
+})
+
+function createColumns() {
+    return [
+        { title: "学号", key: "学号" },
+        { title: "姓名", key: "姓名" },
+        { title: "电话号码", key: "电话号码" },
+        { title: "组织", key: "组织" },
+    ]
+}
 const uploadRef = ref(null)
 const fileListLengthRef = ref(0)
 onMounted(() => {
@@ -39,19 +66,29 @@ async function beforeUpload({ file, fileList }: BUArguments) {
         const fr = new FileReader()
         fr.readAsText(file.file)
         fr.onload = function () {
-            console.log(fr.result)
+            const parseResult = Papa.parse(fr.result as string, {
+                header: true,
+            })
+            data.value = parseResult.data as Array<Record<string, unknown>>
         }
-        console.log(
-            "%c [file]:",
-            "color:white;background:blue;font-size:13px",
-            file
-        )
     } else {
         return false
     }
 }
 function handleChange({ file, fileList }: BUArguments) {
     fileListLengthRef.value = fileList.length
+}
+
+function onClick() {
+    const prePost = { students: data.value }
+
+    console.log(
+        "%c [prePost]:",
+        "color:white;background:blue;font-size:13px",
+        prePost
+    )
+
+    ajax.post("/admin/enrollment", prePost)
 }
 </script>
 
