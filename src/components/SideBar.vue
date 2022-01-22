@@ -1,11 +1,19 @@
 <script setup lang="tsx">
-import { BagHandle, BarChart, Person, Pricetag } from "@vicons/ionicons5"
+import { BagHandle, BarChart, Home, Person, Pricetag } from "@vicons/ionicons5"
 import { NLayoutSider, NMenu } from "naive-ui"
 import { ref } from "vue"
 
 const activeKey = ref("user")
 
 const menuOptions = [
+    {
+        label: () => <router-link to={{ name: "info" }}>概况</router-link>,
+        icon: () => (
+            <n-icon>
+                <Home />
+            </n-icon>
+        ),
+    },
     {
         label: "用户管理",
         icon: () => (
@@ -50,6 +58,14 @@ const menuOptions = [
                 <BagHandle />
             </n-icon>
         ),
+        children: [
+            {
+                label: () => (
+                    <router-link to={{ name: "review" }}>资质审核</router-link>
+                ),
+                key: "qual",
+            },
+        ],
     },
     {
         label: "统计信息",

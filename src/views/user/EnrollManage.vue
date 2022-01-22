@@ -18,7 +18,9 @@
     />
 
     <n-space>
-        <n-button @click="onClick">执行注册</n-button>
+        <n-button @click="onClick" :disabled="data.length < 1">
+            执行注册
+        </n-button>
     </n-space>
 </template>
 
@@ -28,10 +30,11 @@ import ajax from "@/utils/ajax"
 import type { UploadFileInfo } from "naive-ui"
 import { NSpace, NUpload } from "naive-ui"
 import * as Papa from "papaparse"
+import type { Ref } from "vue"
 import { onMounted, reactive, ref } from "vue"
 
 const store = useStore()
-const data = ref([{}])
+const data: Ref<Array<Record<string, unknown>>> = ref([])
 const columns = createColumns()
 
 const pagination = reactive({

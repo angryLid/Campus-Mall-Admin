@@ -1,7 +1,9 @@
 import cookies from "@/utils/cookies"
 import Enroll from "@/views/user/EnrollManage.vue"
 import { createRouter, createWebHashHistory } from "vue-router"
+import GeneralStatus from "./views/GeneralStatus.vue"
 import HomePage from "./views/HomePage.vue"
+import QualificationReview from "./views/retailer/QualificationReview.vue"
 import SignIn from "./views/SignIn.vue"
 import UserManage from "./views/user/UserManage.vue"
 const routes = [
@@ -10,8 +12,14 @@ const routes = [
         component: HomePage,
         name: "home",
         children: [
+            { path: "/", component: GeneralStatus, name: "info" },
             { path: "user/switch", component: UserManage, name: "switch" },
             { path: "user/enroll", component: Enroll, name: "enroll" },
+            {
+                path: "retail/review",
+                component: QualificationReview,
+                name: "review",
+            },
         ],
     },
     { path: "/auth", component: SignIn, name: "signIn" },
