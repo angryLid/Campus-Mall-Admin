@@ -13,6 +13,7 @@ const menuOptions = [
                 <Home />
             </n-icon>
         ),
+        key: "general",
     },
     {
         label: "用户管理",
@@ -21,6 +22,7 @@ const menuOptions = [
                 <Person />
             </n-icon>
         ),
+        key: "user-management",
         children: [
             {
                 label: () => (
