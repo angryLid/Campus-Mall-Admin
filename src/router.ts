@@ -5,6 +5,7 @@ import GeneralStatus from "./views/GeneralStatus.vue"
 import HomePage from "./views/HomePage.vue"
 import QualificationReview from "./views/retailer/QualificationReview.vue"
 import SignIn from "./views/SignIn.vue"
+import SwipeManage from "./views/SwipeManage.vue"
 import UserManage from "./views/user/UserManage.vue"
 const routes = [
     {
@@ -20,6 +21,7 @@ const routes = [
                 component: QualificationReview,
                 name: "review",
             },
+            { path: "swipe", component: SwipeManage, name: "swipe" },
         ],
     },
     { path: "/auth", component: SignIn, name: "signIn" },

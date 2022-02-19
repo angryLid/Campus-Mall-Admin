@@ -1,5 +1,12 @@
 <script setup lang="tsx">
-import { BagHandle, BarChart, Home, Person, Pricetag } from "@vicons/ionicons5"
+import {
+    BagHandle,
+    BarChart,
+    Home,
+    Person,
+    Pricetag,
+    Business,
+} from "@vicons/ionicons5"
 import { NLayoutSider, NMenu } from "naive-ui"
 import { ref } from "vue"
 
@@ -68,6 +75,15 @@ const menuOptions = [
                 key: "qual",
             },
         ],
+    },
+    {
+        label: () => <router-link to={{ name: "swipe" }}>活动管理</router-link>,
+        key: "swipe",
+        icon: () => (
+            <n-icon>
+                <Business />
+            </n-icon>
+        ),
     },
     {
         label: "统计信息",
