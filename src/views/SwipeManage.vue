@@ -74,12 +74,8 @@ import { useStore } from "@/store"
 import { onMounted, reactive, ref, watchEffect } from "vue"
 import { NButton, NTime, NCard, NModal, NUpload, NImage } from "naive-ui"
 import { imageTemplate } from "@/utils/image"
-interface BUArguments {
-    file: UploadFileInfo
-    fileList: UploadFileInfo[]
-}
-const store = useStore()
 
+const store = useStore()
 const message = useMessage()
 const showModal = ref(false)
 const showModal2 = ref(false)
@@ -118,25 +114,20 @@ watchEffect(() => {
         uploadSwipe
     )
 })
-function handleChange({ file, fileList }: BUArguments) {
+function handleChange({ file }: { file: UploadFileInfo }) {
     console.log(
         "%c [hCange]:",
         "color:white;background:blue;font-size:13px",
         file
     )
 }
-async function beforeUpload({ file, fileList }: BUArguments) {
+async function beforeUpload({ file }: { file: UploadFileInfo }) {
     if (!file.type?.startsWith("image")) {
         return false
     }
     if (file.file) {
         fileRef = file.file
     }
-    console.log(
-        "%c [bUpload]:",
-        "color:white;background:red;font-size:13px",
-        file
-    )
 }
 
 async function onPublish() {
@@ -214,16 +205,16 @@ function renderOptions(row: Swipe) {
             disabled={disabled}
             onClick={onTakeDown}
         >
-            下架
+            终止
         </NButton>,
     ]
 }
 function renderStatus(row: Swipe) {
     const status = row.status
     if (status === 0) {
-        return "已下架"
+        return "已结束"
     } else {
-        return "已发布"
+        return "正在进行"
     }
 }
 function renderTime(row: Swipe) {

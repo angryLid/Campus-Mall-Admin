@@ -5,7 +5,7 @@ var fileName = "./mock/students.csv";
 var content = "学号,姓名,电话号码,组织\n";
 (0, fs_1.unlinkSync)(fileName);
 var id = function () {
-    var _id = 2300100000;
+    var _id = 1238400000;
     return function () { return _id++; };
 };
 var name = function () {
@@ -16,15 +16,15 @@ var name = function () {
     };
 };
 var tel = function () {
-    var _tel = 19912340000;
+    var _tel = 19923890000;
     return function () { return _tel++; };
 };
-var org = "22级软件工程";
+var org = "23级美声";
 (0, fs_1.appendFileSync)(fileName, content);
 var g_id = id();
 var g_name = name();
 var g_tel = tel();
-for (var i = 0; i < 5000; i++) {
+for (var i = 0; i < 500; i++) {
     var row = "".concat(g_id(), ",").concat(g_name(), ",").concat(g_tel(), ",").concat(org, "\n");
     (0, fs_1.appendFileSync)(fileName, row);
 }

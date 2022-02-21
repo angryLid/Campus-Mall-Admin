@@ -2,7 +2,6 @@
 import {
     BagHandle,
     BarChart,
-    Home,
     Person,
     Pricetag,
     Business,
@@ -13,15 +12,6 @@ import { ref } from "vue"
 const activeKey = ref("user")
 
 const menuOptions = [
-    {
-        label: () => <router-link to={{ name: "info" }}>概况</router-link>,
-        icon: () => (
-            <n-icon>
-                <Home />
-            </n-icon>
-        ),
-        key: "general",
-    },
     {
         label: "用户管理",
         icon: () => (
@@ -88,8 +78,8 @@ const menuOptions = [
         ),
     },
     {
-        label: "统计信息",
-        key: "statis",
+        label: () => <router-link to={{ name: "info" }}>统计信息</router-link>,
+        key: "statics",
         icon: () => (
             <n-icon>
                 <BarChart />

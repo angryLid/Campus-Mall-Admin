@@ -6,7 +6,7 @@ const content = "学号,姓名,电话号码,组织\n"
 unlinkSync(fileName)
 
 const id = () => {
-    let _id = 2300100000
+    let _id = 1238400000
     return () => _id++
 }
 
@@ -18,10 +18,10 @@ const name = () => {
     }
 }
 const tel = () => {
-    let _tel = 19912340000
+    let _tel = 19923890000
     return () => _tel++
 }
-const org = "22级软件工程"
+const org = "23级美声"
 
 appendFileSync(fileName, content)
 
@@ -29,7 +29,7 @@ const g_id = id()
 const g_name = name()
 const g_tel = tel()
 
-for (let i = 0; i < 5000; i++) {
+for (let i = 0; i < 500; i++) {
     const row = `${g_id()},${g_name()},${g_tel()},${org}\n`
     appendFileSync(fileName, row)
 }
