@@ -1,42 +1,43 @@
 <script lang="tsx" setup>
+import { getUser, getUsers, putUser, User } from "@/api/user"
 import { useStore } from "@/store"
-import { NDataTable, NInputGroup, NTime } from "naive-ui"
+import {
+    NDataTable,
+    NInputGroup,
+    NTime,
+    NTag,
+    NSpace,
+    useMessage,
+} from "naive-ui"
 import { onMounted, reactive, ref } from "vue"
-import ajax from "../../utils/ajax"
 
 const store = useStore()
-onMounted(async () => {
-    store.location = ["用户管理", "启用或停用用户"]
-    const req = await ajax.get("/admin/user")
-    const resp = await req.data
-    data.value = resp.data
-})
-interface User {
-    id: number
-    createdAt: string
-    authStatus: number
-}
-const data = ref([])
+const message = useMessage()
+
+const search = ref("")
+const users = ref<User[]>([])
 const columns = createColumns()
 const pagination = reactive({
-    pageSize: 10,
+    pageSize: 50,
 })
 
+onMounted(async () => {
+    store.location = ["用户管理", "启用或停用用户"]
+    await init()
+})
 function createColumns() {
     return [
         { title: "电话号码", key: "telephone" },
         { title: "昵称", key: "nickname" },
         { title: "加入时间", key: "createdAt", render: renderTime },
-        { title: "类型", key: "roleType" },
-        { title: "状态", key: "authStatus" },
-        { title: "操作", key: "actions", render: render },
-        // {title:"",key:""},
+        { title: "类型", key: "role", render: renderRole },
+        { title: "操作", key: "actions", render: renderOptions },
     ]
 }
-function render(row: User) {
+function renderOptions(row: User) {
     if (row.authStatus === 0) {
         return (
-            <n-button size="small" type="error" onClick={() => onBtnClick(row)}>
+            <n-button size="small" type="error" onClick={() => onSetUser(row)}>
                 禁用
             </n-button>
         )
@@ -45,7 +46,7 @@ function render(row: User) {
             <n-button
                 size="small"
                 type="success"
-                onClick={() => onBtnClick(row)}
+                onClick={() => onSetUser(row)}
             >
                 启用
             </n-button>
@@ -55,43 +56,68 @@ function render(row: User) {
 function renderTime(row: User) {
     return <NTime time={new Date(row.createdAt)} type="relative" />
 }
-async function onBtnClick(row: User) {
-    console.log("%c [row]:", "color:white;background:blue;font-size:13px", row)
-    const req = await ajax.put(
-        `/admin/user/${row.id}/?authStatus=${(row.authStatus + 1) % 2}`
-    )
-    const resp = await req.data
-
+function renderRole(row: User) {
+    if (row.merchantId !== null && row.studentId !== null) {
+        return (
+            <NSpace>
+                <NTag type="info">商户</NTag>
+                <NTag type="warning">学生</NTag>
+            </NSpace>
+        )
+    } else if (row.merchantId !== null) {
+        return <NTag type="info">商户</NTag>
+    } else if (row.studentId !== null) {
+        return <NTag type="warning">学生</NTag>
+    } else {
+        return <NTag>未认证</NTag>
+    }
+}
+async function onSetUser(row: User) {
+    const req = await putUser(row.id, (row.authStatus + 1) % 2)
+    const resp = req.data
     if (resp.code === 200) {
         row.authStatus += 1
         row.authStatus %= 2
     }
 }
 
-async function onClick() {
-    const req = await ajax.get(`/admin/user/${search.value}/`)
-    const resp = await req.data
-    console.log(
-        "%c [resp]:",
-        "color:white;background:blue;font-size:13px",
-        resp
-    )
+async function onSearch() {
+    if (search.value === "" || search.value.trim() === "") {
+        return
+    }
+
+    const req = await getUser(search.value)
+    const resp = req.data
+    if (resp.code === 200) {
+        users.value = [resp.data]
+        return
+    }
+    message.error(resp.data)
 }
-const search = ref("")
+async function init() {
+    const req = await getUsers()
+    const resp = req.data
+
+    if (resp.code === 200) {
+        users.value = resp.data
+        message.info("加载成功")
+    }
+}
 </script>
 
 <template>
     <n-form>
         <n-input-group :style="{ width: '100%' }">
-            <n-input @keydown.enter="onClick" v-model="search" />
-            <n-button type="primary" ghost>搜索</n-button>
+            <n-input @keydown.enter="onSearch" v-model:value="search" />
+            <n-button ghost @click="init">清空</n-button>
+            <n-button type="primary" ghost @click="onSearch">搜索</n-button>
         </n-input-group>
     </n-form>
 
     <n-data-table
         :columns="columns"
-        :data="data"
-        :max-height="600"
+        :data="users"
+        :max-height="500"
         :pagination="pagination"
     />
 </template>

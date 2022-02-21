@@ -51,7 +51,9 @@ const menuOptions = [
         ],
     },
     {
-        label: "商品管理",
+        label: () => (
+            <router-link to={{ name: "product" }}>商品管理</router-link>
+        ),
         key: "product",
         icon: () => (
             <n-icon>

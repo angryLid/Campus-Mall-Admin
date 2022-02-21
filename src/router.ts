@@ -1,4 +1,5 @@
 import cookies from "@/utils/cookies"
+import ProductManage from "@/views/ProductManage.vue"
 import Enroll from "@/views/user/EnrollManage.vue"
 import { createRouter, createWebHashHistory } from "vue-router"
 import GeneralStatus from "./views/GeneralStatus.vue"
@@ -22,6 +23,7 @@ const routes = [
                 name: "review",
             },
             { path: "swipe", component: SwipeManage, name: "swipe" },
+            { path: "product", component: ProductManage, name: "product" },
         ],
     },
     { path: "/auth", component: SignIn, name: "signIn" },
