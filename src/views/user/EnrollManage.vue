@@ -12,13 +12,13 @@
 
     <n-data-table
         :columns="columns"
-        :data="data"
+        :data="students"
         :max-height="600"
         :pagination="pagination"
     />
 
     <n-space>
-        <n-button @click="onClick" :disabled="data.length < 1">
+        <n-button @click="onClick" :disabled="students.length < 1">
             执行注册
         </n-button>
     </n-space>
@@ -26,39 +26,36 @@
 
 <script lang="ts" setup>
 import { useStore } from "@/store"
-import ajax from "@/utils/ajax"
-import type { UploadFileInfo } from "naive-ui"
+import { postStudents } from "@/utils/student"
+import { UploadFileInfo, useMessage } from "naive-ui"
 import { NSpace, NUpload } from "naive-ui"
 import * as Papa from "papaparse"
-import type { Ref } from "vue"
 import { onMounted, reactive, ref } from "vue"
-
-const store = useStore()
-const data: Ref<Array<Record<string, unknown>>> = ref([])
-const columns = createColumns()
-
-const pagination = reactive({
-    pageSize: 10,
-})
-
-function createColumns() {
-    return [
-        { title: "学号", key: "学号" },
-        { title: "姓名", key: "姓名" },
-        { title: "电话号码", key: "电话号码" },
-        { title: "组织", key: "组织" },
-    ]
-}
-const uploadRef = ref(null)
-const fileListLengthRef = ref(0)
-onMounted(() => {
-    store.location = ["用户管理", "新生入学注册"]
-})
 
 interface BUArguments {
     file: UploadFileInfo
     fileList: UploadFileInfo[]
 }
+
+const message = useMessage()
+
+const store = useStore()
+const students = ref<Record<string, string>[]>([])
+const columns = [
+    { title: "学号", key: "学号" },
+    { title: "姓名", key: "姓名" },
+    { title: "电话号码", key: "电话号码" },
+    { title: "组织", key: "组织" },
+]
+const pagination = reactive({
+    pageSize: 10,
+})
+
+const fileListLengthRef = ref(0)
+onMounted(() => {
+    store.location = ["用户管理", "新生入学注册"]
+})
+
 async function beforeUpload({ file, fileList }: BUArguments) {
     if (
         file &&
@@ -71,8 +68,9 @@ async function beforeUpload({ file, fileList }: BUArguments) {
         fr.onload = function () {
             const parseResult = Papa.parse(fr.result as string, {
                 header: true,
+                skipEmptyLines: true,
             })
-            data.value = parseResult.data as Array<Record<string, unknown>>
+            students.value = parseResult.data as Record<string, string>[]
         }
     } else {
         return false
@@ -82,16 +80,24 @@ function handleChange({ file, fileList }: BUArguments) {
     fileListLengthRef.value = fileList.length
 }
 
-function onClick() {
-    const prePost = { students: data.value }
+async function onClick() {
+    const req = await postStudents(students.value)
+    const { data } = req
 
     console.log(
-        "%c [prePost]:",
+        "%c [data]:",
         "color:white;background:blue;font-size:13px",
-        prePost
+        data
     )
 
-    ajax.post("/admin/enrollment", prePost)
+    if (data.code === 40000 || data.code === 50000) {
+        message.error(data.data)
+        return
+    }
+    if (data.code === 200) {
+        message.success(data.data)
+        return
+    }
 }
 </script>
 

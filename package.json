@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "vite --host --port=3001",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "mock": "tsc ./mock/generate_students_csv.ts && node ./mock/generate_students_csv.js"
   },
   "dependencies": {
     "@vicons/ionicons5": "^0.11.0",
