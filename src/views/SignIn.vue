@@ -46,11 +46,9 @@ async function onSubmit() {
     if (resp.code === 200) {
         cookies.setItem("auth", resp.data)
         store.jwt = resp.data
-        router.replace({ name: "home" })
+        router.replace({ name: "info" })
     }
 }
-
-// import
 </script>
 
 <style scoped>
