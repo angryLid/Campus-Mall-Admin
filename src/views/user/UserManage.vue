@@ -9,7 +9,7 @@ import {
     NSpace,
     useMessage,
 } from "naive-ui"
-import { onMounted, reactive, ref } from "vue"
+import { onMounted, ref } from "vue"
 
 const store = useStore()
 const message = useMessage()
@@ -17,9 +17,6 @@ const message = useMessage()
 const search = ref("")
 const users = ref<User[]>([])
 const columns = createColumns()
-const pagination = reactive({
-    pageSize: 50,
-})
 
 onMounted(async () => {
     store.location = ["用户管理", "启用或停用用户"]
@@ -118,7 +115,7 @@ async function init() {
         :columns="columns"
         :data="users"
         :max-height="500"
-        :pagination="pagination"
+        :pagination="{ pageSize: 50 }"
     />
 </template>
 

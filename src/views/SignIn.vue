@@ -2,7 +2,7 @@
     <div class="body">
         <div class="login-app">
             <input type="radio" name="login-opt" id="username" disabled />
-            <label for="username" class="u-btn">账号登录</label>
+            <label for="username" class="u-btn">后台管理 | 校园爱心电商 </label>
             <div class="form-bar">
                 <form action="" class="u-form">
                     <input
@@ -26,6 +26,7 @@
 
 <script lang="ts" setup>
 import { signIn } from "@/api/auth"
+import { useMessage } from "naive-ui"
 import { reactive } from "vue"
 import { useRouter } from "vue-router"
 import { useStore } from "../store"
@@ -33,20 +34,26 @@ import cookies from "../utils/cookies"
 
 const store = useStore()
 const router = useRouter()
-
+const message = useMessage()
 const user = reactive({
     name: "",
     password: "",
 })
 
 async function onSubmit() {
-    const req = await signIn(user)
-    const resp = req.data
+    try {
+        const req = await signIn(user)
+        const resp = req.data
 
-    if (resp.code === 200) {
-        cookies.setItem("auth", resp.data)
-        store.jwt = resp.data
-        router.replace({ name: "info" })
+        if (resp.code === 200) {
+            cookies.setItem("auth", resp.data)
+            store.jwt = resp.data
+            router.replace({ name: "info" })
+        } else {
+            message.error("登录失败,请联系管理员")
+        }
+    } catch (e) {
+        message.error("登录失败,请联系管理员")
     }
 }
 </script>

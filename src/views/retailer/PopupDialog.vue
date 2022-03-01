@@ -58,7 +58,10 @@ onMounted(() => {
 async function onApprove() {
     const q = props.qualification
     if (q) {
-        const req = await putOne(q.id, textArea.value, "approved")
+        const req = await putOne(q.id, {
+            commentary: textArea.value,
+            option: "approved",
+        })
         const resp = req.data
         if (resp.code === 200) {
             emit("approved", q.id)
@@ -68,7 +71,10 @@ async function onApprove() {
 async function onReject() {
     const q = props.qualification
     if (q) {
-        const req = await putOne(q.id, textArea.value, "rejected")
+        const req = await putOne(q.id, {
+            commentary: textArea.value,
+            option: "rejected",
+        })
         const resp = req.data
         if (resp.code === 200) {
             emit("rejected", q.id)

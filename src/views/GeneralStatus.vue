@@ -2,19 +2,28 @@
     <n-page-header>
         <n-grid :cols="3">
             <n-gi>
-                <n-statistic label="总用户数" :value="statics.user + '位'" />
+                <n-statistic
+                    label="总用户数"
+                    :value="statistic.userCount + '位'"
+                />
             </n-gi>
             <n-gi>
-                <n-statistic label="商品数量" :value="statics.product + '个'" />
+                <n-statistic
+                    label="商品数量"
+                    :value="statistic.productCount + '个'"
+                />
             </n-gi>
             <n-gi>
                 <n-statistic
                     label="注册商家"
-                    :value="statics.merchant + '个'"
+                    :value="statistic.merchantCount + '个'"
                 />
             </n-gi>
             <n-gi>
-                <n-statistic label="当日订单" :value="statics.order + '笔'" />
+                <n-statistic
+                    label="当日订单"
+                    :value="statistic.orderCount + '笔'"
+                />
             </n-gi>
             <n-gi>
                 <n-statistic label="待处理投诉" :value="2360 + '条'" />
@@ -36,11 +45,11 @@ import { getStatics, Statics } from "@/api/static"
 
 const store = useStore()
 
-const statics = ref<Statics>({
-    product: 0,
-    user: 0,
-    merchant: 0,
-    order: 0,
+const statistic = ref<Statics>({
+    productCount: 0,
+    merchantCount: 0,
+    userCount: 0,
+    orderCount: 0,
 })
 onMounted(async () => {
     store.location = ["统计信息"]
@@ -50,12 +59,8 @@ onMounted(async () => {
 
 async function init() {
     const req = await getStatics()
-    console.log(
-        "%c [req.data]:",
-        "color:white;background:blue;font-size:13px",
-        req.data
-    )
-    statics.value = req.data.data
+
+    statistic.value = req.data.data
 }
 </script>
 

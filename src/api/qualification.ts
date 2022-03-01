@@ -1,4 +1,8 @@
 import { useAxios } from "./axiosInstance"
+import { apiVersion } from "./version"
+
+const url = apiVersion + "/qualification"
+
 export interface Qualification {
     id: number
     applicantId: number
@@ -15,16 +19,16 @@ export interface Qualification {
     image5?: string
     done?: boolean
 }
-export function getAllWaiting() {
-    return useAxios().get("/admin/qualification/")
+
+export interface Review {
+    commentary: string
+    option: string
 }
 
-export function putOne(
-    id: number,
-    commentary: string,
-    option: "approved" | "rejected"
-) {
-    return useAxios().put(
-        `/admin/qualification/${id}/?option=${option}&commentary=${commentary}`
-    )
+export function getAllWaiting() {
+    return useAxios().get(url)
+}
+
+export function putOne(id: number, payload: Review) {
+    return useAxios().put(`${url}/${id}/`, payload)
 }

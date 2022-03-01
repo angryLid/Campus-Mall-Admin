@@ -12,14 +12,15 @@ export interface User {
     createdAt: string
     authStatus: number
 }
+// POST /{version}/user/{telephone}
 export function getUser(telephone: string) {
     return useAxios().get(url + "/" + telephone)
 }
-
+// GET /{version}/user
 export function getUsers() {
     return useAxios().get(url)
 }
-
+// PUT /{version}/{id}/{status}
 export function putUser(id: string | number, status: string | number) {
     return useAxios().put(`${url}/${id}/${status}`)
 }

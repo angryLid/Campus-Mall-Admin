@@ -25,12 +25,8 @@ async function init() {
     const req = await getProducts()
     const { data } = req
     products.value = data.data
-    console.log(
-        "%c [data]:",
-        "color:white;background:blue;font-size:13px",
-        data
-    )
 }
+
 function createColumns() {
     return [
         {
@@ -63,6 +59,7 @@ function createColumns() {
         },
     ]
 }
+
 function renderDesc(row: Product) {
     if (row.description.length > 20) {
         return row.description.slice(0, 20) + "..."
@@ -70,16 +67,13 @@ function renderDesc(row: Product) {
         return row.description
     }
 }
+
 function renderOptions(row: Product) {
     const status = row.status === -1 ? 0 : -1
     const f = async () => {
         const req = await putProduct(row.id, status)
         const { data } = req
-        console.log(
-            "%c [data]:",
-            "color:white;background:blue;font-size:13px",
-            data
-        )
+
         if (data.code === 200) {
             row.status = status
         }
@@ -98,6 +92,7 @@ function renderOptions(row: Product) {
         )
     }
 }
+
 function renderType(row: Product) {
     const r = row.pType ? "个人闲置" : "商家发布"
     let s = ""
@@ -111,6 +106,7 @@ function renderType(row: Product) {
     }
     return `${r}<${s}>`
 }
+
 function renderTime(row: Product) {
     return <NTime time={new Date(row.createdAt)}></NTime>
 }

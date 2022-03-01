@@ -14,7 +14,7 @@
         :columns="columns"
         :data="students"
         :max-height="500"
-        :pagination="pagination"
+        :pagination="{ pageSize: 50 }"
     />
 
     <n-space>
@@ -29,11 +29,10 @@
 
 <script lang="ts" setup>
 import { useStore } from "@/store"
-import { postStudents } from "@/api/student"
-import { UploadFileInfo, useMessage } from "naive-ui"
-import { NSpace, NUpload } from "naive-ui"
+import { IStudent, postStudents } from "@/api/student"
+import { UploadFileInfo, useMessage, NSpace, NUpload } from "naive-ui"
 import * as Papa from "papaparse"
-import { onMounted, reactive, ref } from "vue"
+import { onMounted, ref } from "vue"
 
 enum Progress {
     None = "",
@@ -45,16 +44,13 @@ enum Progress {
 const message = useMessage()
 const store = useStore()
 
-const students = ref<Record<string, string>[]>([])
+const students = ref<IStudent[]>([])
 const columns = [
     { title: "学号", key: "学号" },
     { title: "姓名", key: "姓名" },
     { title: "电话号码", key: "电话号码" },
     { title: "组织", key: "组织" },
 ]
-const pagination = reactive({
-    pageSize: 50,
-})
 
 const fileListLengthRef = ref(0)
 const progress = ref(Progress.None)
@@ -77,12 +73,13 @@ async function beforeUpload({ file }: { file: UploadFileInfo }) {
                 header: true,
                 skipEmptyLines: true,
             })
-            students.value = parseResult.data as Record<string, string>[]
+            students.value = parseResult.data as IStudent[]
         }
     } else {
         return false
     }
 }
+
 function handleChange({ fileList }: { fileList: UploadFileInfo[] }) {
     fileListLengthRef.value = fileList.length
 }

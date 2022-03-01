@@ -14,6 +14,7 @@ export interface Product {
     isDelete: boolean
 }
 
+// GET /{admin}/product
 export function getProducts() {
     return useAxios().get(url)
 }
