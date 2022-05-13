@@ -19,7 +19,7 @@
             <n-input
                 v-model:value="textArea"
                 type="textarea"
-                placeholder="基本的 Textarea"
+                placeholder="理由"
             />
         </div>
 
