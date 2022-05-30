@@ -67,13 +67,20 @@
 </template>
 
 <script lang="tsx" setup>
-import type { UploadFileInfo } from "naive-ui"
-import { useMessage } from "naive-ui"
 import { getSwipeList, postSwipe, putSwipeStatus, Swipe } from "@/api/swipe"
 import { useStore } from "@/store"
-import { onMounted, reactive, ref, watchEffect } from "vue"
-import { NButton, NTime, NCard, NModal, NUpload, NImage } from "naive-ui"
 import { imageTemplate } from "@/utils/image"
+import type { UploadFileInfo } from "naive-ui"
+import {
+    NButton,
+    NCard,
+    NImage,
+    NModal,
+    NTime,
+    NUpload,
+    useMessage,
+} from "naive-ui"
+import { onMounted, reactive, ref, watchEffect } from "vue"
 
 const store = useStore()
 const message = useMessage()
@@ -100,27 +107,11 @@ onMounted(async () => {
     store.location = ["活动管理"]
     const req = await getSwipeList()
     const { data } = req
-    console.log(
-        "%c [data]:",
-        "color:white;background:blue;font-size:13px",
-        data
-    )
+
     swipeList.value = data.data
 })
-watchEffect(() => {
-    console.log(
-        "%c [swipeList]:",
-        "color:white;background:blue;font-size:13px",
-        uploadSwipe
-    )
-})
-function handleChange({ file }: { file: UploadFileInfo }) {
-    console.log(
-        "%c [hCange]:",
-        "color:white;background:blue;font-size:13px",
-        file
-    )
-}
+watchEffect(() => {})
+function handleChange({ file }: { file: UploadFileInfo }) {}
 async function beforeUpload({ file }: { file: UploadFileInfo }) {
     if (!file.type?.startsWith("image")) {
         return false

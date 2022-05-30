@@ -31,11 +31,6 @@ function render(row: unknown) {
 async function onBtnClick(row: unknown) {
     const req = await ajax.put("/user/student/", row)
     const resp = await req.data
-    console.log(
-        "%c [resp]:",
-        "color:white;background:blue;font-size:13px",
-        resp
-    )
 }
 </script>
 

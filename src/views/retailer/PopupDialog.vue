@@ -39,7 +39,7 @@ import type { Qualification } from "@/api/qualification"
 import { putOne } from "@/api/qualification"
 import { useStore } from "@/store"
 import { NCard, NGi, NGrid } from "naive-ui"
-import { onMounted, ref } from "vue"
+import { ref } from "vue"
 
 const props = defineProps<{
     images: string[]
@@ -52,9 +52,7 @@ const emit = defineEmits<{
 const textArea = ref("")
 const store = useStore()
 const host = store.imageHostURL
-onMounted(() => {
-    console.log("%c [MOUNTerwoh]:", "color:white;background:red;font-size:13px")
-})
+
 async function onApprove() {
     const q = props.qualification
     if (q) {

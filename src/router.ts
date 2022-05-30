@@ -36,17 +36,7 @@ const router = createRouter({
 router.beforeEach(async (to, from) => {
     const auth = cookies.getItem("auth")
     const isLogin = auth !== null && auth !== "" && auth.trim() !== ""
-    console.log(
-        "%c [isLogin]:",
-        "color:white;background:blue;font-size:13px",
-        isLogin
-    )
-    console.log("%c [to]:", "color:white;background:blue;font-size:13px", to)
-    console.log(
-        "%c [from]:",
-        "color:white;background:blue;font-size:13px",
-        from
-    )
+
     if (to.name !== "signIn" && !isLogin) {
         return { name: "signIn" }
     }
